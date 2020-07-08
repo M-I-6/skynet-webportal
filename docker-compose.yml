@@ -15,6 +15,24 @@ services:
     networks:
       - shared
 
+  sia:
+    # image: nebulouslabs/sia:dev
+    build:
+      context: .
+      dockerfile: ./docker/sia/Dockerfile
+    container_name: sia
+    restart: on-failure
+    environment:
+      - SIA_MODULES=gctwr
+    command: --authenticate-api=false
+    volumes:
+      # - ./docker/data/sia:/sia-data
+      - /Users/karol/siastream/sia:/sia-data
+    networks:
+      - shared
+    expose:
+      - 9980
+
   caddy:
     build:
       context: .
